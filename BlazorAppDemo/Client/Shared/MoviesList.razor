@@ -24,6 +24,7 @@
         <label for="showDelete">Show delete</label><br>
         foreach (var movie in movies)
         {
+            <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDelete" />
         }
     }
 </div>
@@ -44,3 +45,5 @@
         movies.Remove(movieToDelete);
     }
 }
+
+
