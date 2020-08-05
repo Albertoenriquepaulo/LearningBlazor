@@ -1,0 +1,32 @@
+﻿<div class="row">
+    <p class="m-0"><strong>Title      : </strong>@Movie.Title</p>
+</div>
+<div class="row">
+    <p class="mb-0"><strong>Releas Date: </strong>@Movie.ReleasDate.ToString("dd MM yyyy")</p>
+</div>
+@if (showDeleteButton)
+{
+    <div class="row">
+        <a class="btn btn-danger mb-0" @onclick="@(()=> HandleDelete())">Delete</a>
+        <a class="btn btn-outline-danger mb-0" @onclick="@(()=> DeleteMovie.InvokeAsync(Movie))">Delete</a>
+    </div>
+}
+
+<hr class="row m-0" />
+
+@code {
+    [Parameter]
+    public Movie Movie { get; set; }
+
+    [Parameter]
+    public bool showDeleteButton { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<Movie> DeleteMovie { get; set; }
+
+
+    private void HandleDelete()
+    {
+        Console.WriteLine($"{Movie.Title} Deleted");
+    }
+}

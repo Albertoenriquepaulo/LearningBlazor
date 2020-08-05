@@ -2,16 +2,12 @@
 
 <div>
     <h3>Movie</h3>
-    <input type="checkbox" id="showDelete" name="showDelete" @bind="showDeleteButton">
-    <label for="showDelete">Show delete</label><br>
-    <MoviesList movies="movies" showDeleteButton="showDeleteButton" />
+    <MoviesList movies="movies" />
 </div>
 
 @code{
     List<Movie> movies;
 
-    [Parameter]
-    public bool showDeleteButton { get; set; } = false;
 
     protected override void OnInitialized()
     {
