@@ -1,0 +1,50 @@
+﻿<div class="grid">
+
+    @if (movies == null)
+    {
+        <div class="row">
+            <img src="https://spcom.upc.edu/es/shared/tenor.gif" />
+        </div>
+
+
+    }
+    else if (movies.Count == 0)
+    {
+        <text>No records to show</text>
+    }
+    else
+    {
+        foreach (var movie in movies)
+        {
+            <div class="row">
+                <p class="m-0"><strong>Title      : </strong>@movie.Title</p>
+            </div>
+            <div class="row">
+                <p class="mb-0"><strong>Releas Date: </strong>@movie.ReleasDate.ToString("dd MM yyyy")</p>
+            </div>
+            @if (showDeleteButton)
+            {
+                <div class="row">
+                    <a class="btn btn-danger mb-0" @onclick="@(()=> HandleDelete(movie))">Delete</a>
+                </div>
+            }
+
+            <hr class="row m-0" />
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<Movie> movies { get; set; }
+
+    [Parameter]
+    public bool showDeleteButton { get; set; } = false;
+
+
+    private void HandleDelete(Movie movieToDelete)
+    {
+        Console.WriteLine($"{movieToDelete.Title} Deleted");
+    }
+
+}
