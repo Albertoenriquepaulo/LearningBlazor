@@ -3,7 +3,15 @@
     @if (movies == null)
     {
         <div class="row">
-            <img src="https://spcom.upc.edu/es/shared/tenor.gif" />
+            @if (ChildContent != null)
+            {
+                @ChildContent
+
+            }
+            else
+            {
+                <img src="https://spcom.upc.edu/es/shared/tenor.gif" />
+            }
         </div>
     }
     else if (movies.Count == 0)
@@ -16,7 +24,6 @@
         <label for="showDelete">Show delete</label><br>
         foreach (var movie in movies)
         {
-            <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDelete" />
         }
     }
 </div>
@@ -25,14 +32,15 @@
     [Parameter]
     public List<Movie> movies { get; set; }
 
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
     public bool showDeleteButton { get; set; } = true;
 
 
     private void HandleDelete(Movie movieToDelete)
     {
         Console.WriteLine($"{movieToDelete.Title} Deleted FROM EventCallback");
+        movies.Remove(movieToDelete);
     }
-
-
-
 }
