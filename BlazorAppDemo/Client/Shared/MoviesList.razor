@@ -1,48 +1,19 @@
-﻿<div class="grid">
-
-    @if (movies == null)
-    {
-        <div class="row">
-            @if (ChildContent != null)
-            {
-                @ChildContent
-
-            }
-            else
-            {
-                <img src="https://spcom.upc.edu/es/shared/tenor.gif" />
-            }
-        </div>
-    }
-    else if (movies.Count == 0)
-    {
-        <text>No records to show</text>
-    }
-    else
-    {
-        <input type="checkbox" id="showDelete" name="showDelete" @bind="showDeleteButton">
-        <label for="showDelete">Show delete</label><br>
-        foreach (var movie in movies)
-        {
-            <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDelete" />
-        }
-    }
-</div>
+﻿<GenericList List="Movies">
+    <ElementTemplate Context="movie">
+        <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDelete" />
+    </ElementTemplate>
+</GenericList>
 
 @code {
     [Parameter]
-    public List<Movie> movies { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public List<Movie> Movies { get; set; }
 
     public bool showDeleteButton { get; set; } = true;
-
 
     private void HandleDelete(Movie movieToDelete)
     {
         Console.WriteLine($"{movieToDelete.Title} Deleted FROM EventCallback");
-        movies.Remove(movieToDelete);
+        Movies.Remove(movieToDelete);
     }
 }
 

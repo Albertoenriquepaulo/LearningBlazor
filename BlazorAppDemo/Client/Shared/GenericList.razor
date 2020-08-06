@@ -1,0 +1,74 @@
+﻿@typeparam TItem
+
+<div class="grid">
+    @if (List == null)
+    {
+        <div class="row">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+
+            }
+            else
+            {
+                <img src="https://spcom.upc.edu/es/shared/tenor.gif" />
+            }
+        </div>
+    }
+    else if (List.Count == 0)
+    {
+        <div class="row">
+            @if (EmptyTemplate != null)
+            {
+                @EmptyTemplate
+
+            }
+            else
+            {
+                <text>No records to show</text>
+            }
+        </div>
+
+    }
+    else
+    {
+        @if (List.GetType() == typeof(List<string>))
+        {
+            foreach (var item in List)
+            {
+                <div class="row">
+                    <p class="m-0">@item</p>
+                </div>
+            }
+
+        }
+        else
+        {
+            <input type="checkbox" id="showDelete" name="showDelete" @bind="showDeleteButton">
+            <label for="showDelete">Show delete</label>
+            <br>
+
+            foreach (var item in List)
+            {
+                @ElementTemplate(item)
+            }
+        }
+
+    }
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment EmptyTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> ElementTemplate { get; set; }
+
+    [Parameter]
+    public List<TItem> List { get; set; }
+
+    public bool showDeleteButton { get; set; } = true;
+}
