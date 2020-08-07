@@ -1,0 +1,41 @@
+﻿@if (DisplayConfirmation)
+{
+    <div class="modal is-active">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">@Title</p>
+                <button class="delete" aria-label="close" @onclick="onCancel"></button>
+            </header>
+            <section class="modal-card-body">
+                @ChildContent
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" @onclick="onConfirm">Aceptar</button>
+                <button class="button" @onclick="onCancel">Cancel</button>
+            </footer>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool DisplayConfirmation { get; set; } = false;
+
+    [Parameter]
+    public string Title { get; set; } = "Confirm";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
+    [Parameter]
+    public EventCallback onConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback onCancel { get; set; }
+
+    public void Show() => DisplayConfirmation = true;
+    public void Hide() => DisplayConfirmation = false;
+
+}
