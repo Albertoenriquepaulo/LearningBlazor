@@ -1,5 +1,6 @@
 ﻿using BlazorAppDemo.Client.Model;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,21 @@ namespace BlazorAppDemo.Client.Pages
     {
         [Inject] SingletonServices _singletonServices { get; set; }
         [Inject] TransientServices _transientServices { get; set; }
+        [Inject] IJSRuntime _js { get; set; }
+
+
 
         private int currentCount = 0;
+        private static int currentCountStatic = 0;
         List<Movie> movies;
 
 
-        private void IncrementCount()
+        private async Task IncrementCount()
         {
-            currentCount++;
+            currentCount++; currentCountStatic++;
             _transientServices.Value = currentCount;
             _singletonServices.Value = currentCount;
+            await _js.InvokeVoidAsync("dotnetStaticInvocation");
         }
 
         protected override void OnInitialized()
@@ -33,6 +39,13 @@ namespace BlazorAppDemo.Client.Pages
                 new Movie { Title = "Ciudad Bendita", ReleasDate = new DateTime(2007, 11, 1) }
             };
 
+        }
+
+        //https://docs.microsoft.com/es-es/aspnet/core/blazor/call-dotnet-from-javascript?view=aspnetcore-3.1
+        [JSInvokable]
+        public static Task<int> GetCurrentCount()
+        {
+            return Task.FromResult(currentCountStatic);
         }
     }
 }

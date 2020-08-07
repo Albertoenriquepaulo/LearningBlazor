@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace BlazorAppDemo.Client.Helpers
 {
-    public static class IJSRuntimeExtensionMethodsXX
+    //https://docs.microsoft.com/es-es/aspnet/core/blazor/call-dotnet-from-javascript?view=aspnetcore-3.1
+    public static class IJSRuntimeExtensionMethods
     {
         public static async ValueTask<bool> Confirm(this IJSRuntime js, string message)
         {
