@@ -1,8 +1,11 @@
 ﻿@page "/counter"
-
+@inject SingletonServices SingletonServices
+@inject TransientServices TransientServices
 <h1>Counter</h1>
 
 <p>Current count: @currentCount</p>
+<p>Singleton count: @SingletonServices.Value</p>
+<p>Transient count: @TransientServices.Value</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 <MoviesList Movies="movies" />
@@ -14,6 +17,8 @@
     private void IncrementCount()
     {
         currentCount++;
+        TransientServices.Value = currentCount;
+        SingletonServices.Value = currentCount;
     }
 
     protected override void OnInitialized()

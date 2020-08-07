@@ -1,8 +1,14 @@
 ﻿@page "/"
+@inject SingletonServices SingletonServices
+@inject IRepository Repository
+<h1>Counter</h1>
+
+<p>Singleton count: @SingletonServices.Value</p>
 
 <div>
     <h3>Movie</h3>
     <MoviesList Movies="movies" />
+    <button class="button is-primary+" @onclick="AddNewMovie">Add new movie</button>
     <GenericList List="otraLista" />
 </div>
 
@@ -16,11 +22,7 @@
     protected override void OnInitialized()
     {
         //await Task.Delay(2000);
-        movies = new List<Movie>(){
-            new Movie { Title = "Pocoyo", ReleasDate = new DateTime(2015, 7, 2) },
-            new Movie { Title = "Superman", ReleasDate = new DateTime(2018, 2, 2) },
-            new Movie { Title = "The Schindler List", ReleasDate = new DateTime(2020, 1, 2) }
-        };
+        movies = Repository.GetMovies();
 
         otraLista = new List<string>(){
             "God Given",
@@ -28,4 +30,10 @@
             "Régimen desgraciado"
         };
     }
+
+    private void AddNewMovie()
+    {
+        movies.Add(new Movie { Title = "Pocoyo", ReleasDate = DateTime.UtcNow });
+    }
+
 }
