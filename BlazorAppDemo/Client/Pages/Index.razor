@@ -1,39 +1,38 @@
 ﻿@page "/"
 @inject SingletonServices SingletonServices
 @inject IRepository Repository
-<h1>Counter</h1>
 
-<p>Singleton count: @SingletonServices.Value</p>
+    <p>Singleton count: @SingletonServices.Value</p>
 
-<div>
-    <h3>Movie</h3>
-    <MoviesList Movies="movies" />
-    <button class="button is-primary+" @onclick="AddNewMovie">Add new movie</button>
-    <GenericList List="otraLista" />
-</div>
+    <div>
+        <h3>Movie</h3>
+        <MoviesList Movies="movies" />
+        <button class="button is-primary+" @onclick="AddNewMovie">Add new movie</button>
+        <GenericList List="otraLista" />
+    </div>
 
-@code{
-    List<Movie> movies;
-    List<string> otraLista;
+    @code{
+        List<Movie> movies;
+        List<string> otraLista;
 
-    string strItem;
+        string strItem;
 
 
-    protected override void OnInitialized()
-    {
-        //await Task.Delay(2000);
-        movies = Repository.GetMovies();
+        protected override void OnInitialized()
+        {
+            //await Task.Delay(2000);
+            movies = Repository.GetMovies();
 
-        otraLista = new List<string>(){
+            otraLista = new List<string>(){
             "God Given",
             "Nicolás Maduro",
             "Régimen desgraciado"
         };
-    }
+        }
 
-    private void AddNewMovie()
-    {
-        movies.Add(new Movie { Title = "Pocoyo", ReleasDate = DateTime.UtcNow });
-    }
+        private void AddNewMovie()
+        {
+            movies.Add(new Movie { Title = "Pocoyo", ReleasDate = DateTime.UtcNow });
+        }
 
-}
+    }

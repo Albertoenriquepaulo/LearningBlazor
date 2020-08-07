@@ -1,32 +1,13 @@
 ﻿@page "/counter"
-@inject SingletonServices SingletonServices
-@inject TransientServices TransientServices
+
+
+
 <h1>Counter</h1>
 
 <p>Current count: @currentCount</p>
-<p>Singleton count: @SingletonServices.Value</p>
-<p>Transient count: @TransientServices.Value</p>
+<p>Singleton count: @_singletonServices.Value</p>
+<p>Transient count: @_transientServices.Value</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 <MoviesList Movies="movies" />
 
-@code {
-    private int currentCount = 0;
-    List<Movie> movies;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-        TransientServices.Value = currentCount;
-        SingletonServices.Value = currentCount;
-    }
-
-    protected override void OnInitialized()
-    {
-        movies = new List<Movie>(){
-            new Movie { Title = "Tardes Felices", ReleasDate = new DateTime(2018, 5, 5) },
-            new Movie { Title = "Show de Fantástico", ReleasDate = new DateTime(1998, 10, 12) },
-            new Movie { Title = "Ciudad Bendita", ReleasDate = new DateTime(2007, 11, 1) }
-        };
-    }
-}
