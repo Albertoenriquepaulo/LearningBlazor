@@ -32,7 +32,7 @@
     }
     else
     {
-        @if (List.GetType() == typeof(List<string>))
+        @if (List.GetType() == typeof(List<string>)) //Para cuando reciba una lista de string instead of Movie
         {
             foreach (var item in List)
             {
@@ -44,7 +44,7 @@
         }
         else
         {
-            <input type="checkbox" id="showDelete" name="showDelete" @bind="showDeleteButton">
+            <input type="checkbox" id="showDelete" name="showDelete" @bind="showDeleteButton" @onclick="Test">
             <label for="showDelete">Show delete</label>
             <br>
 
@@ -70,5 +70,15 @@
     [Parameter]
     public List<TItem> List { get; set; }
 
+    [Parameter]
     public bool showDeleteButton { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> SetShowDeleteButton { get; set; }
+
+    private void Test()
+    {
+        //Console.WriteLine(!showDeleteButton);
+        SetShowDeleteButton.InvokeAsync(!showDeleteButton);
+    }
 }

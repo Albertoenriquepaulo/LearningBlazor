@@ -1,4 +1,4 @@
-﻿<GenericList List="Movies">
+﻿<GenericList List="Movies" SetShowDeleteButton="SetShowDeleteButton">
     <ElementTemplate Context="movie">
         <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDelete" />
     </ElementTemplate>
@@ -14,6 +14,31 @@
     {
         Console.WriteLine($"{movieToDelete.Title} Deleted FROM EventCallback");
         Movies.Remove(movieToDelete);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized. Movies.Count =" + (Movies == null ? "" : Movies.Count.ToString()));
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("OnParametersSet. Movies.Count =" + (Movies == null ? "" : Movies.Count.ToString()));
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("OnAfterRender. firstRender =" + firstRender.ToString());
+    }
+
+    protected override bool ShouldRender()
+    {
+        return true;
+    }
+
+    private void SetShowDeleteButton(bool value)
+    {
+        showDeleteButton = value;
     }
 }
 

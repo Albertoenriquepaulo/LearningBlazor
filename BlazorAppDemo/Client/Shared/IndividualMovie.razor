@@ -7,8 +7,8 @@
 @if (showDeleteButton)
 {
     <div class="row">
-        <a class="btn btn-danger mb-0" @onclick="@(()=> HandleDelete())">Delete</a>
-        <a class="btn btn-outline-danger mb-0" @onclick="@(()=> DeleteMovie.InvokeAsync(Movie))">Delete</a>
+        @*<a class="button is-danger is-light mb-0" @onclick="@(()=> HandleDelete())">Delete</a>*@
+        <a class="button is-danger is-light is-small mb-1" @onclick="@(()=> DeleteMovie.InvokeAsync(Movie))">Delete</a>
     </div>
 }
 
@@ -20,7 +20,7 @@
 
 
     [Parameter]
-    public bool showDeleteButton { get; set; } = true;
+    public bool showDeleteButton { get; set; } = false;
 
     [Parameter]
     public EventCallback<Movie> DeleteMovie { get; set; }
@@ -29,5 +29,10 @@
     private void HandleDelete()
     {
         Console.WriteLine($"{Movie.Title} Deleted");
+    }
+
+    protected override bool ShouldRender()
+    {
+        return true;
     }
 }

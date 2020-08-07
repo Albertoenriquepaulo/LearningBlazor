@@ -13,9 +13,9 @@
     string strItem;
 
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await Task.Delay(2000);
+        //await Task.Delay(2000);
         movies = new List<Movie>(){
             new Movie { Title = "Pocoyo", ReleasDate = new DateTime(2015, 7, 2) },
             new Movie { Title = "Superman", ReleasDate = new DateTime(2018, 2, 2) },
