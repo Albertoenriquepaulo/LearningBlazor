@@ -1,6 +1,8 @@
-﻿<GenericList List="Movies" SetShowDeleteButton="SetShowDeleteButton">
+﻿@inject IJSRuntime js
+
+<GenericList List="Movies" SetShowDeleteButton="SetShowDeleteButton">
     <ElementTemplate Context="movie">
-        <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDelete" />
+        <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDeleteAsync" />
     </ElementTemplate>
 </GenericList>
 
@@ -12,10 +14,15 @@
 
     public bool showDeleteButton { get; set; } = true;
 
-    private void HandleDelete(Movie movieToDelete)
+    private async Task HandleDeleteAsync(Movie movieToDelete)
     {
-        Console.WriteLine($"{movieToDelete.Title} Deleted FROM EventCallback");
-        Movies.Remove(movieToDelete);
+        await js.MyFunction("Custom Message from c# to js");
+        var confirmed = await js.Confirm($"Are you sure you want to delete {movieToDelete.Title}");
+        if (confirmed)
+        {
+            Console.WriteLine($"{movieToDelete.Title} Deleted FROM EventCallback");
+            Movies.Remove(movieToDelete);
+        }
     }
 
     protected override void OnInitialized()
