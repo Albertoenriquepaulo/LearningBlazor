@@ -21,13 +21,18 @@ namespace BlazorAppDemo.Client.Pages
         private static int currentCountStatic = 0;
         List<Movie> movies;
 
-
-        private async Task IncrementCount()
+        [JSInvokable]
+        public async Task IncrementCount()
         {
             currentCount++; currentCountStatic++;
             _transientServices.Value = currentCount;
             _singletonServices.Value = currentCount;
             await _js.InvokeVoidAsync("dotnetStaticInvocation");
+        }
+        private async Task IncrementCountJS()
+        {
+            await _js.InvokeVoidAsync("dotnetInstanceInvocation",
+                DotNetObjectReference.Create(this));
         }
 
         protected override void OnInitialized()
