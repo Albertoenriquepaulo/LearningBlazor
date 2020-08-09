@@ -1,4 +1,5 @@
-﻿using BlazorAppDemo.Client.Model;
+﻿using BlazorAppDemo.Client.Helpers;
+using BlazorAppDemo.Client.Model;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -14,9 +15,11 @@ namespace BlazorAppDemo.Client.Pages
         [Inject] SingletonServices _singletonServices { get; set; }
         [Inject] TransientServices _transientServices { get; set; }
         [Inject] IJSRuntime _js { get; set; }
+        //[CascadingParameter(Name = "Color")] public string Color { get; set; }
+        //[CascadingParameter(Name = "Size")] public string Size { get; set; }
+        [CascadingParameter] public CssParam CssParam { get; set; }
 
-
-
+        private string selectedColor;
         private int currentCount = 0;
         private static int currentCountStatic = 0;
         List<Movie> movies;
@@ -37,6 +40,8 @@ namespace BlazorAppDemo.Client.Pages
 
         protected override void OnInitialized()
         {
+            selectedColor = "has-text-danger";
+
             movies = new List<Movie>()
             {
                 new Movie { Title = "Tardes Felices", ReleasDate = new DateTime(2018, 5, 5) },
@@ -46,11 +51,33 @@ namespace BlazorAppDemo.Client.Pages
 
         }
 
+        public void OnSelectedColorChange()
+        {
+            switch (CssParam.Color)
+            {
+                case "red":
+                    selectedColor = "has-text-danger";
+                    break;
+                case "green":
+                    selectedColor = "has-text-success";
+                    break;
+                case "blue":
+                    selectedColor = "has-text-link";
+                    break;
+                default:
+                    // code block
+                    break;
+            }
+            //StateHasChanged();
+        }
+
         //https://docs.microsoft.com/es-es/aspnet/core/blazor/call-dotnet-from-javascript?view=aspnetcore-3.1
         [JSInvokable]
         public static Task<int> GetCurrentCount()
         {
             return Task.FromResult(currentCountStatic);
         }
+
+
     }
 }

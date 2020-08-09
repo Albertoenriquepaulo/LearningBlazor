@@ -10,6 +10,13 @@
     </div>
 
     <div class="content px-4">
-        @Body
+        <CascadingValue Value="cssParam">
+            @Body
+        </CascadingValue>
+
     </div>
 </div>
+
+@code{
+    private CssParam cssParam = new CssParam();
+}

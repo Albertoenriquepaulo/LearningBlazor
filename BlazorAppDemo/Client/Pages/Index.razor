@@ -2,7 +2,7 @@
 @inject SingletonServices SingletonServices
 @inject IRepository Repository
 
-<p>Singleton count: @SingletonServices.Value</p>
+<p style="color:@CssParam.Color">Singleton count: @SingletonServices.Value</p>
 
 <div>
     <h3>Movie</h3>
@@ -17,6 +17,7 @@
 
     List<Movie> movies;
     List<string> otraLista;
+    [CascadingParameter] public CssParam CssParam { get; set; }
 
     string strItem;
 
