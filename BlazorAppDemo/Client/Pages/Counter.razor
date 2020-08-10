@@ -1,30 +1,7 @@
 ﻿@page "/counter"
 
-
-
-<h1 style="color: @CssParam.Color">Counter</h1>
-
-<div class="select">
-    <select @bind="CssParam.Color" class="@selectedColor" @onclick="OnSelectedColorChange">
-        <option value="green" class="has-text-success">Green</option>
-        <option value="red" class="has-text-danger">Red</option>
-        <option value="blue" class="has-text-link">Blue</option>
-    </select>
-</div>
-<div class="select">
-    <select @bind="CssParam.Size">
-        <option value="12px" class="is-size-7">12px</option>
-        <option value="20px" class="is-size-6">20px</option>
-        <option value="30px" class="is-size-5">30px</option>
-    </select>
-</div>
-
-
-<p style="color: @CssParam.Color; font-size:@CssParam.Size">Current count: @currentCount</p>
-<p>Singleton count: @_singletonServices.Value</p>
-<p>Transient count: @_transientServices.Value</p>
+<p>Current count: @currentCount</p>
 
 <button class="button is-primary is-light" @onclick="IncrementCount">Click me</button>
-<button class="button is-primary" @onclick="IncrementCountJS">Click me from JS</button>
-<MoviesList Movies="movies" />
+<input type="number" @bind="currentCount" />
 

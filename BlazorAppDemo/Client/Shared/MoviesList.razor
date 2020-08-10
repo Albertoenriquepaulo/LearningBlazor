@@ -1,78 +1,34 @@
 ﻿@inject IJSRuntime js
 
-<GenericList List="Movies" SetShowDeleteButton="SetShowDeleteButton">
-    <ElementTemplate Context="movie">
-        <IndividualMovie Movie="movie" showDeleteButton="showDeleteButton" DeleteMovie="HandleDeleteAsync" />
-    </ElementTemplate>
-</GenericList>
+<div class="movies-container">
+    <GenericList List="Movies">
+        <ElementTemplate Context="movie">
+            <IndividualMovie Movie="movie" DeleteMovie="HandleDeleteAsync" />
+        </ElementTemplate>
+    </GenericList>
+</div>
 
-<Confirmation @ref="confirmation" onCancel="onCancel" onConfirm="onConfirm">
-    <div>Are you sure you want to delete <strong>@movieToBeDeleted.Title?</strong></div> @*this is the childcomponent*@
-</Confirmation>
+
 
 @code {
-    Confirmation confirmation;
 
     [Parameter]
     public List<Movie> Movies { get; set; }
 
-    public bool showDeleteButton { get; set; } = true;
-
-    Movie movieToBeDeleted;
-
     private async Task HandleDeleteAsync(Movie movie)
     {
-        confirmation.Show();
-        movieToBeDeleted = movie;
-
-        //await js.MyFunction("Custom Message from c# to js");
-        //var confirmed = await js.Confirm($"Are you sure you want to delete {movieToDelete.Title}");
-        //if (confirmed)
-        //{
-        //    Console.WriteLine($"{movieToDelete.Title} Deleted FROM EventCallback");
-        //    Movies.Remove(movieToDelete);
-        //}
-    }
-
-    void onConfirm()
-    {
-        Movies.Remove(movieToBeDeleted);
-        confirmation.Hide();
-        movieToBeDeleted = null;
-    }
-
-    void onCancel()
-    {
-        confirmation.Hide();
-    }
-
-
-    protected override void OnInitialized()
-    {
-        Console.WriteLine("OnInitialized. Movies.Count =" + (Movies == null ? "" : Movies.Count.ToString()));
-    }
-
-    protected override void OnParametersSet()
-    {
-        Console.WriteLine("OnParametersSet. Movies.Count =" + (Movies == null ? "" : Movies.Count.ToString()));
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        Console.WriteLine("OnAfterRender. firstRender =" + firstRender.ToString());
-    }
-
-    protected override bool ShouldRender()
-    {
-        return true;
+        await js.MyFunction("Custom Message from c# to js");
+        var confirmed = await js.Confirm($"Are you sure you want to delete {movie.Title}");
+        if (confirmed)
+        {
+            Console.WriteLine($"{movie.Title} Deleted FROM EventCallback");
+            Movies.Remove(movie);
+        }
     }
 
     private void SetShowDeleteButton(bool value)
     {
-        showDeleteButton = value;
     }
-
-
 }
 
 

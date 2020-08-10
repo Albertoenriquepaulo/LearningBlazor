@@ -1,38 +1,37 @@
-﻿<div class="row">
-    <p class="m-0"><strong>Title      : </strong>@Movie.Title</p>
-</div>
-<div class="row">
-    <p class="mb-0"><strong>Releas Date: </strong>@Movie.ReleasDate.ToString("dd MM yyyy")</p>
-</div>
-@if (showDeleteButton)
-{
-    <div class="row">
-        @*<a class="button is-danger is-light mb-0" @onclick="@(()=> HandleDelete())">Delete</a>*@
-        <a class="button is-danger is-light is-small mb-1" @onclick="@(()=> DeleteMovie.InvokeAsync(Movie))">Delete</a>
+﻿<div class="card">
+    <div class="card-image">
+        <figure class="image">
+            <img src="@Movie.Poster" alt="Poster" class="movie-poster">
+        </figure>
     </div>
-}
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4">@Movie.TitleBrief</p>
+            </div>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <a href="#" class="card-footer-item" @onclick:preventDefault>Edit</a>
+        <a href="" class="card-footer-item" @onclick="@(()=> DeleteMovie.InvokeAsync(Movie))" @onclick:preventDefault>Delete</a>
+    </footer>
+</div>
 
-<hr class="row m-0" />
+
+
+
+@*<div class="individual-movie-container">
+        <a>
+            <img src="@Movie.Poster" alt="Poster" class="movie-poster" />
+        </a>
+    </div>*@
+
 
 @code {
     [Parameter]
     public Movie Movie { get; set; }
 
-
-    [Parameter]
-    public bool showDeleteButton { get; set; } = false;
-
     [Parameter]
     public EventCallback<Movie> DeleteMovie { get; set; }
 
-
-    private void HandleDelete()
-    {
-        Console.WriteLine($"{Movie.Title} Deleted");
-    }
-
-    protected override bool ShouldRender()
-    {
-        return true;
-    }
 }

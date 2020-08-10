@@ -10,5 +10,21 @@ namespace BlazorAppDemo.Client.Model
     {
         public string Title { get; set; }
         public DateTime ReleasDate { get; set; }
+        public string Poster { get; set; }
+        public string TitleBrief
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Title))
+                {
+                    return null;
+                }
+                else if (Title.Length > 60)
+                {
+                    return Title.Substring(0, 600) + "...";
+                }
+                return Title;
+            }
+        }
     }
 }
