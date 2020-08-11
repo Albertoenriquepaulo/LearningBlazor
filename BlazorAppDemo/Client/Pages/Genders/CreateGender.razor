@@ -2,6 +2,23 @@
 
 <h3>CreateGender</h3>
 
-@code {
+<EditForm Model="gender" OnSubmit="Create">
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <InputText class="input" type="text" placeholder="Text input" @bind-Value="@gender.Name" />
+        </div>
+    </div>
 
+    <button class="button is-success is-light" type="submit">Save Changes</button>
+</EditForm>
+
+
+@code {
+    private Gender gender = new Gender();
+
+    private void Create()
+    {
+        Console.WriteLine(gender.Name);
+    }
 }
