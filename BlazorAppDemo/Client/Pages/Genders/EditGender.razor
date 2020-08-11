@@ -1,7 +1,13 @@
-﻿@page "/gender/edit"
+﻿@page "/gender/edit/{GenderId:int}"
 
 <h3>EditGender</h3>
 
 @code {
+    [Parameter] public int GenderId { get; set; }
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Console.WriteLine($"Gender Id: {GenderId}");
+    }
 }
