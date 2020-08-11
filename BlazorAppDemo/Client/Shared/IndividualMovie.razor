@@ -1,18 +1,21 @@
 ﻿<div class="card">
     <div class="card-image">
         <figure class="image">
-            <img src="@Movie.Poster" alt="Poster" class="movie-poster">
+            <a href="@movieUrl">
+                <img src="@Movie.Poster" alt="Poster" class="movie-poster">
+            </a>
         </figure>
     </div>
     <div class="card-content">
         <div class="media">
             <div class="media-content">
-                <p class="title is-4">@Movie.TitleBrief</p>
+                <a href="@movieUrl"><p class="title is-4">@Movie.TitleBrief</p></a>
             </div>
         </div>
     </div>
     <footer class="card-footer">
         <a href="#" class="card-footer-item" @onclick:preventDefault>Edit</a>
+        <a href="@movieUrl" class="card-footer-item">Details</a>
         <a href="" class="card-footer-item" @onclick="@(()=> DeleteMovie.InvokeAsync(Movie))" @onclick:preventDefault>Delete</a>
     </footer>
 </div>
@@ -34,4 +37,11 @@
     [Parameter]
     public EventCallback<Movie> DeleteMovie { get; set; }
 
+    private string movieUrl = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        movieUrl = $"movie/";
+    }
 }
