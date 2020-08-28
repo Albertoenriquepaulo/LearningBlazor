@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorAppDemo.Client.Repository;
+using Tewr.Blazor.FileReader;
 
 namespace BlazorAppDemo.Client
 {
@@ -20,6 +21,7 @@ namespace BlazorAppDemo.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddTransient<IRepository, RepositoryInMemory>();
+            builder.Services.AddFileReaderService(option => option.InitializeOnFirstCall = true);
 
             await builder.Build().RunAsync();
         }

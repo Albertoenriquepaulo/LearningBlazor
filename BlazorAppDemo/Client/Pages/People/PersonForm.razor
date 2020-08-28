@@ -17,7 +17,7 @@
     </div>
 
     <div class="form-group">
-
+        <InputImage Label="Picture" OnSelectedImage="PictureSelected" ImageUrl="@imageUrl" />
     </div>
 
     <div class="form-group">
@@ -31,4 +31,22 @@
 @code {
     [Parameter] public Person Person { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    private string imageUrl;
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Person.Picture) == false)
+        {
+            //This code is to avoid sending the image if the image was not updated
+            imageUrl = Person.Picture;
+            Person.Picture = null;
+        }
+    }
+
+    private void PictureSelected(string imageBase64)
+    {
+        Person.Picture = imageBase64;
+        imageUrl = null;
+        Console.WriteLine(imageBase64);
+    }
 }

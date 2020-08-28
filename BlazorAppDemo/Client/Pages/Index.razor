@@ -12,7 +12,7 @@
 
     List<Movie> movies;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         //await Task.Delay(2000);
         movies = Repository.GetMovies();
