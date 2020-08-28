@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorAppDemo.Client.Model
+namespace BlazorAppDemo.Shared.Entities
 {
     public class Movie
     {
@@ -35,5 +35,6 @@ namespace BlazorAppDemo.Client.Model
                 return Title;
             }
         }
+        public List<MovieGender> MoviesGender { get; set; } = new List<MovieGender>();
     }
 }

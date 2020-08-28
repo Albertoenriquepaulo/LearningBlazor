@@ -1,12 +1,23 @@
 ﻿@page "/movie/edit/{MovieId:int}"
 <h3>Edit Movie</h3>
 
-<MovieForm Movie="movie" OnValidSubmit="Edit" />
+@if (movie != null)
+{
+    <MovieForm Movie="movie" OnValidSubmit="Edit" SelectedGenders="SelectedGenders" NoSelectedGenders="NoSelectedGenders" />
+}
 
 @code {
     [Parameter] public int MovieId { get; set; }
     private Movie movie = new Movie();
 
+    private List<Gender> NoSelectedGenders = new List<Gender>{
+        new Gender{Id = 2, Name = "Comedy" },
+        new Gender{Id = 3, Name = "Drama" }
+    };
+
+    private List<Gender> SelectedGenders = new List<Gender>{
+        new Gender{Id = 1, Name = "Action" },
+    };
 
     protected override void OnInitialized()
     {

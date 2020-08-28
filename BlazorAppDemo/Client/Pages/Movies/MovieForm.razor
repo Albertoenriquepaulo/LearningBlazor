@@ -9,11 +9,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label>In Theaters</label>
         <div>
-            <InputCheckbox class="form-control" @bind-Value="@Movie.InTheaters" />
+            <InputCheckbox class="form-control form-check-input ml-2" @bind-Value="@Movie.InTheaters" style="height:15px;width:15px" />
             <ValidationMessage For="@(()=>Movie.InTheaters)" />
+            <label class="form-check-label ml-5 pl-2">In Theaters</label>
         </div>
+
     </div>
     <div class="form-group">
         <label>Trailer:</label>
@@ -37,16 +38,32 @@
         <InputMarkdown @bind-Value="Movie.Summary" Label="Summary" For="@(()=>Movie.Summary)" />
     </div>
 
+    <div class="form-group">
+        <label>Gender:</label>
+        <div>
+            <MultipleSelector Selected="Selected" NoSelected="NoSelected">
+
+            </MultipleSelector>
+        </div>
+    </div>
+
     <button class="button is-success is-light" type="submit">Save changes</button>
 </EditForm>
 
 @code {
     [Parameter] public Movie Movie { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public List<Gender> SelectedGenders { get; set; } = new List<Gender>();
+    [Parameter] public List<Gender> NoSelectedGenders { get; set; } = new List<Gender>();
+    public List<MultipleSelectorModel> Selected { get; set; } = new List<MultipleSelectorModel>();
+    public List<MultipleSelectorModel> NoSelected { get; set; } = new List<MultipleSelectorModel>();
     private string imageUrl;
 
     protected override void OnInitialized()
     {
+        Selected = SelectedGenders.Select(x => new MultipleSelectorModel(x.Id.ToString(), x.Name)).ToList();
+        NoSelected = NoSelectedGenders.Select(x => new MultipleSelectorModel(x.Id.ToString(), x.Name)).ToList();
+
         if (string.IsNullOrEmpty(Movie.Poster) == false)
         {
             //This code is to avoid sending the image if the image was not updated

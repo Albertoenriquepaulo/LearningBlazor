@@ -14,5 +14,6 @@ namespace BlazorAppDemo.Shared.Entities
 
         [Required(ErrorMessage = "The Gender Name field is required.")]
         public string Name { get; set; }
+        public List<MovieGender> MoviesGender { get; set; } = new List<MovieGender>();
     }
 }

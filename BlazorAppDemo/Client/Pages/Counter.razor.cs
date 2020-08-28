@@ -1,5 +1,4 @@
 ﻿using BlazorAppDemo.Client.Helpers;
-using BlazorAppDemo.Client.Model;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;

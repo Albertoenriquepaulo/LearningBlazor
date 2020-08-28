@@ -1,4 +1,4 @@
-﻿using BlazorAppDemo.Client.Model;
+﻿using BlazorAppDemo.Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
