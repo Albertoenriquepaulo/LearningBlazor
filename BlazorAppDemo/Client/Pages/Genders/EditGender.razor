@@ -2,12 +2,27 @@
 
 <h3>EditGender</h3>
 
+@if (gender != null)
+{
+    <GenderForm Gender="gender" OnValidSubmit="Edit" />
+}
+
 @code {
     [Parameter] public int GenderId { get; set; }
 
+    public Gender gender;
+
     protected override void OnInitialized()
     {
-        base.OnInitialized();
-        Console.WriteLine($"Gender Id: {GenderId}");
+        gender = new Gender { Id = GenderId, Name = "Comedy" };
+        //base.OnInitialized();
+        //Console.WriteLine($"Gender Id: {GenderId}");
+    }
+
+    private void Edit()
+    {
+        Console.WriteLine("Edit Method");
+        Console.WriteLine("ID = {0}", gender.Id);
+        Console.WriteLine("Name = {0}", gender.Name);
     }
 }

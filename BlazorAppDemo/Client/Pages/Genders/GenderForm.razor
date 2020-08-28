@@ -1,0 +1,20 @@
+﻿<EditForm Model="Gender" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <InputText class="input" type="text" placeholder="Text input" @bind-Value="@Gender.Name" />
+            <ValidationMessage For="@(()=>Gender.Name)" />
+        </div>
+    </div>
+
+    <button class="button is-success is-light" type="submit">Save Changes</button>
+</EditForm>
+
+@code {
+
+    [Parameter] public Gender Gender { get; set; }
+
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
