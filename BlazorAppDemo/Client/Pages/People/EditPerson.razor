@@ -1,6 +1,24 @@
-﻿@page "/person/edit/{PersonId}"
+﻿@page "/person/edit/{PersonId:int}"
 <h3>EditPerson</h3>
+
+@if (person != null)
+{
+    <PersonForm Person="person" OnValidSubmit="Edit" />
+}
 
 @code {
     [Parameter] public int PersonId { get; set; }
+
+    private Person person = new Person();
+
+    protected override void OnInitialized()
+    {
+        person = new Person { Id = PersonId, Name = "Alberto", BirthDate = DateTime.Today, Biography = "Biography...", Picture = "A pic..." };
+    }
+
+    private void Edit()
+    {
+        Console.WriteLine("Editing person {0}...", PersonId);
+    }
+
 }
