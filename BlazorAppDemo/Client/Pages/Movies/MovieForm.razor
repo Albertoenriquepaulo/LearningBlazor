@@ -1,0 +1,64 @@
+﻿
+<EditForm Model="Movie" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Title:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Movie.Title" />
+            <ValidationMessage For="@(()=>Movie.Title)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>In Theaters</label>
+        <div>
+            <InputCheckbox class="form-control" @bind-Value="@Movie.InTheaters" />
+            <ValidationMessage For="@(()=>Movie.InTheaters)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Trailer:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Movie.Trailer" />
+            <ValidationMessage For="@(()=>Movie.Trailer)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Release Date:</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Movie.ReleasDate" />
+            <ValidationMessage For="@(()=>Movie.ReleasDate)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <InputImage Label="Picture" OnSelectedImage="PosterSelected" ImageUrl="@imageUrl" />
+    </div>
+
+    <div class="form-group form-markdown">
+        <InputMarkdown @bind-Value="Movie.Summary" Label="Summary" For="@(()=>Movie.Summary)" />
+    </div>
+
+    <button class="button is-success is-light" type="submit">Save changes</button>
+</EditForm>
+
+@code {
+    [Parameter] public Movie Movie { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    private string imageUrl;
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Movie.Poster) == false)
+        {
+            //This code is to avoid sending the image if the image was not updated
+            imageUrl = Movie.Poster;
+            Movie.Poster = null;
+        }
+    }
+
+    private void PosterSelected(string imageBase64)
+    {
+        Movie.Poster = imageBase64;
+        imageUrl = null;
+        Console.WriteLine(imageBase64);
+    }
+}

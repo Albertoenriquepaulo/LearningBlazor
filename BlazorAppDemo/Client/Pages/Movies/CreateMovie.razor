@@ -3,12 +3,15 @@
 
 <h3>CreateMovie</h3>
 
-<button class="button is-link is-light" @onclick="SaveMovie">Save Movie</button>
+<MovieForm Movie="movie" OnValidSubmit="SaveMovie" />
 
 @code {
+
+    private Movie movie = new Movie();
+
     private void SaveMovie()
     {
-        Console.WriteLine(navigationManager.Uri);
-        navigationManager.NavigateTo("movie");
+        Console.WriteLine("Saving movie...");
+        //navigationManager.NavigateTo("movie");
     }
 }
