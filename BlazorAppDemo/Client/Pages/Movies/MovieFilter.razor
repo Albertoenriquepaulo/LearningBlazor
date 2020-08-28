@@ -1,0 +1,84 @@
+﻿@page "/movies/search"
+@inject IRepository inj_repository
+
+<h3>Search Movies</h3>
+
+<div class="form-inline">
+    <div class="form-group mb-2">
+        <label for="title" class="sr-only">Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Movie Title" @bind-value="title" @bind-value:event="oninput"
+               @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))">
+    </div>
+
+    <div class="form-group mx-sm-3 mb-2">
+        <select class="form-control" @bind="selectedGender">
+            <option value=0>--Select a gender</option>
+            @foreach (var gender in genders)
+            {
+                <option value=@gender.Id>@gender.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="checkbox" class="form-check-input" id="upcomingReleases" @bind="upcomingReleases">
+        <label for="upcomingReleases" class="form-check-label">Upcoming Releases</label>
+    </div>
+
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="checkbox" class="form-check-input" id="upcomingReleases" @bind="inTheaters">
+        <label for="upcomingReleases" class="form-check-label">In Theaters</label>
+    </div>
+
+    <button type="button" class="btn btn-primary mb-2 mx-sm-3" @onclick="SearchForMovies">Filter</button>
+    <button type="button" class="btn btn-danger mb-2 " @onclick="Clear">Clear</button>
+</div>
+
+<MoviesList Movies="movies"></MoviesList>
+
+@code {
+
+    private List<Movie> movies;
+
+    string title = "";
+    int selectedGender = 0;
+    private List<Gender> genders = new List<Gender>(){
+        new Gender {Id = 1, Name="Actions" },
+        new Gender { Id = 2, Name = "Comedy" }
+    };
+
+    private bool upcomingReleases = false;
+    private bool inTheaters = false;
+
+    protected override void OnInitialized()
+    {
+        movies = inj_repository.GetMovies();
+        base.OnInitialized();
+    }
+
+    private void TitleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            SearchForMovies();
+        }
+    }
+
+    private void SearchForMovies()
+    {
+        movies = movies.Where(movie => movie.Title.Contains(title)).ToList();
+        Console.WriteLine("Title: {0}", title);
+        Console.WriteLine("Selected Gender: {0}", selectedGender);
+        Console.WriteLine("Upcoming Releases: {0}", upcomingReleases);
+        Console.WriteLine("In Theaters: {0}", inTheaters);
+    }
+
+    private void Clear()
+    {
+        movies = inj_repository.GetMovies();
+        title = string.Empty;
+        selectedGender = 0;
+        upcomingReleases = false;
+        inTheaters = false;
+    }
+}
